@@ -16,6 +16,6 @@ export default function features({params}:
         </h1>
     }
     return <h1>
-        Docs Page
+        Docs Page 
     </h1>                                                                    
 }
