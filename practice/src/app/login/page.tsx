@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const router = useRouter();
 
   const validate = () => {
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
@@ -37,7 +39,7 @@ export default function Login() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Login failed");
       setSuccess("Login successful!");
-      // Optionally redirect or set user context here
+      router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -46,8 +48,28 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-purple-100">
-      <div className="flex w-[900px] h-[600px] bg-purple-50 rounded-lg shadow-lg overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-purple-100 relative overflow-hidden">
+      {/* Animated SVG Background Shapes */}
+      <svg
+        className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] opacity-40 animate-float-slow z-0"
+        viewBox="0 0 400 400"
+      >
+        <circle cx="200" cy="200" r="200" fill="#a78bfa" />
+      </svg>
+      <svg
+        className="absolute bottom-[-120px] right-[-120px] w-[500px] h-[500px] opacity-30 animate-float z-0"
+        viewBox="0 0 500 500"
+      >
+        <rect width="500" height="500" rx="250" fill="#facc15" />
+      </svg>
+      <svg
+        className="absolute top-1/2 left-[-80px] w-[200px] h-[200px] opacity-20 animate-float-fast z-0"
+        viewBox="0 0 200 200"
+      >
+        <ellipse cx="100" cy="100" rx="100" ry="80" fill="#f472b6" />
+      </svg>
+      {/* Existing content */}
+      <div className="flex w-[900px] h-[600px] bg-purple-50 rounded-lg shadow-lg overflow-hidden relative z-10">
         {/* Left: Login Form */}
         <div className="w-1/2 flex flex-col justify-center px-12 py-10">
           {/* Logo */}
@@ -139,6 +161,24 @@ export default function Login() {
           </div>
         </div>
       </div>
+      {/* Global CSS Animations */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px);}
+          50% { transform: translateY(-30px);}
+        }
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px);}
+          50% { transform: translateY(-15px);}
+        }
+        @keyframes float-fast {
+          0%, 100% { transform: translateY(0px);}
+          50% { transform: translateY(-50px);}
+        }
+        .animate-float { animation: float 7s ease-in-out infinite; }
+        .animate-float-slow { animation: float-slow 12s ease-in-out infinite; }
+        .animate-float-fast { animation: float-fast 5s ease-in-out infinite; }
+      `}</style>
     </div>
   );
 }

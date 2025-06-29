@@ -61,7 +61,7 @@ export default function Register() {
 
       setSuccess("Registration successful! Redirecting...");
       setTimeout(() => {
-        router.push("/");
+        router.push("/dashboard");
       }, 1500);
     } catch (err: any) {
       setError(err.message);
@@ -73,16 +73,41 @@ export default function Register() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-purple-100">
-      <div className="w-[400px] bg-purple-50 rounded-lg shadow-lg p-10">
+    <div className="min-h-screen flex items-center justify-center bg-purple-100 relative overflow-hidden">
+      {/* Animated SVG Background Shapes */}
+      <svg
+        className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] opacity-40 animate-float-slow z-0"
+        viewBox="0 0 400 400"
+      >
+        <circle cx="200" cy="200" r="200" fill="#a78bfa" />
+      </svg>
+      <svg
+        className="absolute bottom-[-120px] right-[-120px] w-[500px] h-[500px] opacity-30 animate-float z-0"
+        viewBox="0 0 500 500"
+      >
+        <rect width="500" height="500" rx="250" fill="#facc15" />
+      </svg>
+      <svg
+        className="absolute top-1/2 left-[-80px] w-[200px] h-[200px] opacity-20 animate-float-fast z-0"
+        viewBox="0 0 200 200"
+      >
+        <ellipse cx="100" cy="100" rx="100" ry="80" fill="#f472b6" />
+      </svg>
+
+      {/* Centered Registration Form */}
+      <div className="relative z-10 w-full max-w-md bg-purple-50 rounded-lg shadow-lg px-12 py-10 flex flex-col justify-center">
+        {/* Logo */}
         <div className="mb-8 text-center">
           <span className="font-serif text-2xl font-bold text-purple-800">SAP</span>
         </div>
+        {/* Welcome */}
         <h2 className="text-3xl font-serif font-semibold mb-2 text-purple-800 text-center">
           Create your account
         </h2>
-        <p className="text-purple-600 mb-8 text-center">Sign up to get started</p>
-
+        <p className="text-purple-600 mb-8 text-center">
+          Join us and start organizing your tasks!
+        </p>
+        {/* Form */}
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name" className="block font-medium mb-1 text-purple-800">Name</label>
@@ -157,6 +182,25 @@ export default function Register() {
           </Link>
         </div>
       </div>
+
+      {/* Global CSS Animations */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px);}
+          50% { transform: translateY(-30px);}
+        }
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px);}
+          50% { transform: translateY(-15px);}
+        }
+        @keyframes float-fast {
+          0%, 100% { transform: translateY(0px);}
+          50% { transform: translateY(-50px);}
+        }
+        .animate-float { animation: float 7s ease-in-out infinite; }
+        .animate-float-slow { animation: float-slow 12s ease-in-out infinite; }
+        .animate-float-fast { animation: float-fast 5s ease-in-out infinite; }
+      `}</style>
     </div>
   );
 }
